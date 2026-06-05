@@ -1561,6 +1561,259 @@
       color: rgba(255, 255, 255, .65);
     }
 
+    /* BOOKING FORM STYLES */
+    .booking-form {
+      background: rgba(255, 255, 255, .95);
+      backdrop-filter: blur(12px);
+      border-radius: var(--r);
+      padding: 48px;
+      margin-top: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-group {
+      margin-bottom: 28px;
+    }
+
+    .form-group:last-of-type {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.3px;
+    }
+
+    .optional {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 15px;
+      border: 2px solid var(--border);
+      border-radius: var(--r-sm);
+      background: var(--white);
+      color: var(--text);
+      transition: all 0.25s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--green);
+      background: rgba(42, 98, 25, .02);
+      box-shadow: 0 0 0 3px rgba(42, 98, 25, .1);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(26, 34, 18, .4);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-size: 14px;
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232A6219' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-select option {
+      padding: 10px;
+    }
+
+    .form-hint {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .checkbox-group {
+      margin: 32px 0;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .form-checkbox {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--green);
+    }
+
+    .checkbox-text {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 8px;
+      padding: 18px 24px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    /* Success Message */
+    .success-message {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .success-content {
+      background: var(--white);
+      border-radius: var(--r);
+      padding: 60px 48px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, .2);
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: bounce 0.6s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .success-content h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      font-family: 'Unbounded', sans-serif;
+    }
+
+    .success-content p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--green-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(42, 98, 25, .3);
+    }
+
+    /* Responsive Form */
+    @media(max-width: 768px) {
+      .booking-form {
+        padding: 32px 24px;
+      }
+
+      .form-label {
+        font-size: 13px;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+
+      .success-content {
+        padding: 40px 24px;
+        margin: 20px;
+      }
+    }
+
     /* FOOTER */
     footer {
       background: var(--dark);
@@ -2533,27 +2786,102 @@
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA WITH BOOKING FORM -->
   <section id="cta">
     <div class="cta-blob cta-blob-1"></div>
     <div class="cta-blob cta-blob-2"></div>
     <div class="cta-inner">
       <span class="label">Готові забронювати?</span>
       <h2>Забронюй зміну на літо</h2>
-      <p>Напиши нам в Instagram — і ми підберемо зміну, відповімо на всі питання та оформимо бронювання. Місць обмежено!
-      </p>
-      <div class="cta-actions">
-        <a href="https://instagram.com/sokolyata_camp" target="_blank" rel="noopener noreferrer"
-          class="btn-cta-primary">
-          <span>📸</span>
-          Забронювати путівку
-        </a>
-        <a href="https://instagram.com/sokolyata_camp" target="_blank" rel="noopener noreferrer"
-          class="btn-cta-secondary">
-          Напиши нам в Дірект →
-        </a>
+      <p>Заповни форму, і ми оформимо твоє місце в таборі. Місць обмежено!</p>
+      
+      <form id="bookingForm" class="booking-form" onsubmit="handleFormSubmit(event)">
+        <!-- ПІБ -->
+        <div class="form-group">
+          <label for="childName" class="form-label">ПІБ дитини</label>
+          <input 
+            type="text" 
+            id="childName" 
+            name="childName" 
+            placeholder="Введіть прізвище, ім'я та по батькові"
+            class="form-input"
+            required
+          >
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="parentPhone" class="form-label">Контактний номер телефону батька/матері</label>
+          <input 
+            type="tel" 
+            id="parentPhone" 
+            name="parentPhone" 
+            placeholder="+380 XX XXX XX XX"
+            class="form-input"
+            pattern="\+380\s\d{2}\s\d{3}\s\d{2}\s\d{2}"
+            required
+          >
+          <small class="form-hint">Формат: +380 XX XXX XX XX</small>
+        </div>
+
+        <!-- Session Selection -->
+        <div class="form-group">
+          <label for="session" class="form-label">Оберіть бажану зміну</label>
+          <select id="session" name="session" class="form-select" required>
+            <option value="">Виберіть зміну</option>
+            <option value="session-1">15.07.2026 – 28.07.2026</option>
+            <option value="session-2">01.07.2026 – 14.07.2026</option>
+            <option value="session-3">15.07.2026 – 28.07.2026</option>
+            <option value="session-4">01.08.2026 – 14.08.2026</option>
+            <option value="session-5">15.08.2026 – 28.08.2026</option>
+          </select>
+        </div>
+
+        <!-- Comment -->
+        <div class="form-group">
+          <label for="comment" class="form-label">Додатковий коментар <span class="optional">(необов'язково)</span></label>
+          <textarea 
+            id="comment" 
+            name="comment" 
+            placeholder="Напишіть про особливості, вподобання дитини або питання..."
+            class="form-textarea"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input 
+              type="checkbox" 
+              name="consent" 
+              id="consent"
+              class="form-checkbox"
+              required
+            >
+            <span class="checkbox-text">
+              Я надаю згоду на обробку моїх персональних даних з метою зв'язку щодо бронювання зміни та організації відпочинку дитини.
+            </span>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-cta-primary btn-submit">
+          <span>✨</span>
+          Забронювати місце
+        </button>
+
+      </form>
+
+      <!-- Success Message -->
+      <div id="successMessage" class="success-message" style="display: none;">
+        <div class="success-content">
+          <div class="success-icon">💛</div>
+          <h3>Дякуємо що обираєте нас!</h3>
+          <p>Ми зв'яжемося з вами для підтвердження бронювання.</p>
+          <button type="button" class="btn-secondary" onclick="resetForm()">Подати ще одну заявку</button>
+        </div>
       </div>
-      <p class="cta-note">@sokolyata_camp · Відповідаємо протягом декількох годин 💛</p>
     </div>
   </section>
 
@@ -2688,6 +3016,89 @@
     draggable(document.getElementById('galleryScroll'));
     draggable(document.getElementById('reviewsScroll'));
     draggable(document.getElementById('territoryScroll'));
+
+    // Booking Form Handler
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      // Get form data
+      const formData = {
+        childName: document.getElementById('childName').value,
+        parentPhone: document.getElementById('parentPhone').value,
+        session: document.getElementById('session').value,
+        comment: document.getElementById('comment').value,
+        consent: document.getElementById('consent').checked,
+        timestamp: new Date().toISOString()
+      };
+
+      // Validate form
+      if (!formData.childName || !formData.parentPhone || !formData.session || !formData.consent) {
+        alert('Будь ласка, заповніть всі обов\'язкові поля');
+        return;
+      }
+
+      // Log form data (in production, send to server)
+      console.log('Booking Form Submitted:', formData);
+
+      // Here you can add code to send data to your server
+      // Example:
+      // fetch('/api/bookings', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData)
+      // }).then(res => res.json()).then(data => showSuccess());
+
+      // Show success message
+      showSuccess();
+    }
+
+    function showSuccess() {
+      const form = document.getElementById('bookingForm');
+      const successMsg = document.getElementById('successMessage');
+      
+      form.style.display = 'none';
+      successMsg.style.display = 'flex';
+    }
+
+    function resetForm() {
+      document.getElementById('bookingForm').reset();
+      document.getElementById('bookingForm').style.display = 'block';
+      document.getElementById('successMessage').style.display = 'none';
+    }
+
+    // Phone number formatting
+    const phoneInput = document.getElementById('parentPhone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 0) {
+          if (!value.startsWith('380')) {
+            if (value.startsWith('38')) {
+              value = '380' + value.slice(2);
+            } else if (value.startsWith('0')) {
+              value = '380' + value.slice(1);
+            } else {
+              value = '380' + value;
+            }
+          }
+
+          if (value.length >= 12) {
+            value = '+' + value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5, 8) + ' ' + value.slice(8, 10) + ' ' + value.slice(10, 12);
+          } else if (value.length >= 10) {
+            value = '+' + value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5, 8) + ' ' + value.slice(8);
+          } else if (value.length >= 5) {
+            value = '+' + value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5);
+          } else if (value.length >= 3) {
+            value = '+' + value.slice(0, 3) + ' ' + value.slice(3);
+          } else {
+            value = '+' + value;
+          }
+        }
+        
+        e.target.value = value;
+      });
+    }
   </script>
 </body>
 
