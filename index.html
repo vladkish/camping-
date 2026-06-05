@@ -1577,6 +1577,7 @@
         opacity: 0;
         transform: translateY(30px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -1717,6 +1718,7 @@
       from {
         opacity: 0;
       }
+
       to {
         opacity: 1;
       }
@@ -1737,6 +1739,7 @@
         opacity: 0;
         transform: scale(0.9);
       }
+
       to {
         opacity: 1;
         transform: scale(1);
@@ -1750,9 +1753,12 @@
     }
 
     @keyframes bounce {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(-8px);
       }
@@ -2297,12 +2303,11 @@
           <span class="stat-label">медичний нагляд</span>
         </div>
       </div>
-      <div class="hero-scroll">
-        <span>гортати</span>
+      <!-- <div class="hero-scroll">
         <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M7 3v14M2 12l5 5 5-5" />
         </svg>
-      </div>
+      </div> -->
     </div>
     <div class="hero-right">
       <div class="hero-blob hero-blob-1"></div>
@@ -2794,33 +2799,20 @@
       <span class="label">Готові забронювати?</span>
       <h2>Забронюй зміну на літо</h2>
       <p>Заповни форму, і ми оформимо твоє місце в таборі. Місць обмежено!</p>
-      
+
       <form id="bookingForm" class="booking-form" onsubmit="handleFormSubmit(event)">
         <!-- ПІБ -->
         <div class="form-group">
           <label for="childName" class="form-label">ПІБ дитини</label>
-          <input 
-            type="text" 
-            id="childName" 
-            name="childName" 
-            placeholder="Введіть прізвище, ім'я та по батькові"
-            class="form-input"
-            required
-          >
+          <input type="text" id="childName" name="childName" placeholder="Введіть прізвище, ім'я та по батькові"
+            class="form-input" required>
         </div>
 
         <!-- Phone -->
         <div class="form-group">
           <label for="parentPhone" class="form-label">Контактний номер телефону батька/матері</label>
-          <input 
-            type="tel" 
-            id="parentPhone" 
-            name="parentPhone" 
-            placeholder="+380 XX XXX XX XX"
-            class="form-input"
-            pattern="\+380\s\d{2}\s\d{3}\s\d{2}\s\d{2}"
-            required
-          >
+          <input type="tel" id="parentPhone" name="parentPhone" placeholder="+380 XX XXX XX XX" class="form-input"
+            pattern="\+380\s\d{2}\s\d{3}\s\d{2}\s\d{2}" required>
           <small class="form-hint">Формат: +380 XX XXX XX XX</small>
         </div>
 
@@ -2839,28 +2831,19 @@
 
         <!-- Comment -->
         <div class="form-group">
-          <label for="comment" class="form-label">Додатковий коментар <span class="optional">(необов'язково)</span></label>
-          <textarea 
-            id="comment" 
-            name="comment" 
-            placeholder="Напишіть про особливості, вподобання дитини або питання..."
-            class="form-textarea"
-            rows="3"
-          ></textarea>
+          <label for="comment" class="form-label">Додатковий коментар <span
+              class="optional">(необов'язково)</span></label>
+          <textarea id="comment" name="comment" placeholder="Напишіть про особливості, вподобання дитини або питання..."
+            class="form-textarea" rows="3"></textarea>
         </div>
 
         <!-- Checkbox -->
         <div class="form-group checkbox-group">
           <label class="checkbox-label">
-            <input 
-              type="checkbox" 
-              name="consent" 
-              id="consent"
-              class="form-checkbox"
-              required
-            >
+            <input type="checkbox" name="consent" id="consent" class="form-checkbox" required>
             <span class="checkbox-text">
-              Я надаю згоду на обробку моїх персональних даних з метою зв'язку щодо бронювання зміни та організації відпочинку дитини.
+              Я надаю згоду на обробку моїх персональних даних з метою зв'язку щодо бронювання зміни та організації
+              відпочинку дитини.
             </span>
           </label>
         </div>
@@ -3020,7 +3003,7 @@
     // Booking Form Handler
     function handleFormSubmit(event) {
       event.preventDefault();
-      
+
       // Get form data
       const formData = {
         childName: document.getElementById('childName').value,
@@ -3055,7 +3038,7 @@
     function showSuccess() {
       const form = document.getElementById('bookingForm');
       const successMsg = document.getElementById('successMessage');
-      
+
       form.style.display = 'none';
       successMsg.style.display = 'flex';
     }
@@ -3069,9 +3052,9 @@
     // Phone number formatting
     const phoneInput = document.getElementById('parentPhone');
     if (phoneInput) {
-      phoneInput.addEventListener('input', function(e) {
+      phoneInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
-        
+
         if (value.length > 0) {
           if (!value.startsWith('380')) {
             if (value.startsWith('38')) {
@@ -3095,7 +3078,7 @@
             value = '+' + value;
           }
         }
-        
+
         e.target.value = value;
       });
     }
