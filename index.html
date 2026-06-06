@@ -3020,79 +3020,46 @@
     draggable(document.getElementById('territoryScroll'));
 
     // Booking Form Handler
-    // Initialize EmailJS когда документ полностью загружен
-    function initEmailJS() {
-      if (typeof emailjs !== 'undefined') {
-        try {
-          emailjs.init({
-            publicKey: 'EyRfxZJwn3RpaSRsy'
-          });
-          console.log('EmailJS инициализирован успешно');
-        } catch (error) {
-          console.error('Ошибка инициализации EmailJS:', error);
-        }
-      } else {
-        console.log('EmailJS еще не загружен, переpроверяем...');
-        setTimeout(initEmailJS, 500);
-      }
-    }
-
-    // Инициализируем когда страница загружена
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initEmailJS);
-    } else {
-      initEmailJS();
-    }
+    // Initialize EmailJS
+    emailjs.init('EyRfxZJwn3RpaSRsy');
 
     function handleFormSubmit(event) {
       event.preventDefault();
       
-      // Проверяем что EmailJS загружен
-      if (typeof emailjs === 'undefined') {
-        alert('⏳ Сервіс відправки писем ще загружається...\nПопробуйте через кілька секунд.');
-        return;
-      }
-      
       // Get form data
-      const formData = {
-        childName: document.getElementById('childName').value,
-        parentPhone: document.getElementById('parentPhone').value,
-        session: document.getElementById('session').value,
-        comment: document.getElementById('comment').value,
-        consent: document.getElementById('consent').checked,
-        timestamp: new Date().toLocaleString('uk-UA')
-      };
+      const childName = document.getElementById('childName').value;
+      const parentPhone = document.getElementById('parentPhone').value;
+      const session = document.getElementById('session').value;
+      const comment = document.getElementById('comment').value || 'Немає';
+      const consent = document.getElementById('consent').checked;
 
       // Validate form
-      if (!formData.childName || !formData.parentPhone || !formData.session || !formData.consent) {
+      if (!childName || !parentPhone || !session || !consent) {
         alert('Будь ласка, заповніть всі обов\'язкові поля');
         return;
       }
 
       // Show loading state
       const submitBtn = document.querySelector('.btn-submit');
-      const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>⏳</span> Відправляємо...';
 
       // Send email via EmailJS
       emailjs.send('service_ef51fz5', 'booking_form', {
         to_email: 'donets.lada.m@gmail.com',
-        child_name: formData.childName,
-        parent_phone: formData.parentPhone,
-        session: formData.session,
-        comment: formData.comment || 'Немає',
-        timestamp: formData.timestamp
-      }).then(response => {
-        console.log('Email sent successfully:', response);
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
+        child_name: childName,
+        parent_phone: parentPhone,
+        session: session,
+        comment: comment,
+        timestamp: new Date().toLocaleString('uk-UA')
+      }).then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
         showSuccess();
-      }).catch(error => {
-        console.error('Failed to send email:', error);
-        alert('Сталася помилка при відправленні. Помилка: ' + error.status);
-        submitBtn.innerHTML = originalText;
+      }, function(error) {
+        console.log('FAILED!', error);
+        alert('Помилка при відправленні');
         submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>✨</span> Забронювати місце';
       });
     }
 
