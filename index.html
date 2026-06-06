@@ -1577,6 +1577,7 @@
         opacity: 0;
         transform: translateY(30px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -1717,6 +1718,7 @@
       from {
         opacity: 0;
       }
+
       to {
         opacity: 1;
       }
@@ -1737,6 +1739,7 @@
         opacity: 0;
         transform: scale(0.9);
       }
+
       to {
         opacity: 1;
         transform: scale(1);
@@ -1750,9 +1753,12 @@
     }
 
     @keyframes bounce {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(-8px);
       }
@@ -2794,33 +2800,20 @@
       <span class="label">Готові забронювати?</span>
       <h2>Забронюй зміну на літо</h2>
       <p>Заповни форму, і ми оформимо твоє місце в таборі. Місць обмежено!</p>
-      
-      <form id="bookingForm" class="booking-form" action="https://formspree.io/f/mojzjyqb" method="POST" onsubmit="handleFormSubmit(event)">
+
+      <form id="bookingForm" class="booking-form" onsubmit="submitForm(event)">
         <!-- ПІБ -->
         <div class="form-group">
           <label for="childName" class="form-label">ПІБ дитини</label>
-          <input 
-            type="text" 
-            id="childName" 
-            name="childName" 
-            placeholder="Введіть прізвище, ім'я та по батькові"
-            class="form-input"
-            required
-          >
+          <input type="text" id="childName" name="childName" placeholder="Введіть прізвище, ім'я та по батькові"
+            class="form-input" required>
         </div>
 
         <!-- Phone -->
         <div class="form-group">
           <label for="parentPhone" class="form-label">Контактний номер телефону батька/матері</label>
-          <input 
-            type="tel" 
-            id="parentPhone" 
-            name="parentPhone" 
-            placeholder="+380 XX XXX XX XX"
-            class="form-input"
-            pattern="\+380\s\d{2}\s\d{3}\s\d{2}\s\d{2}"
-            required
-          >
+          <input type="tel" id="parentPhone" name="parentPhone" placeholder="+380 XX XXX XX XX" class="form-input"
+            pattern="\+380\s\d{2}\s\d{3}\s\d{2}\s\d{2}" required>
           <small class="form-hint">Формат: +380 XX XXX XX XX</small>
         </div>
 
@@ -2838,28 +2831,19 @@
 
         <!-- Comment -->
         <div class="form-group">
-          <label for="comment" class="form-label">Додатковий коментар <span class="optional">(необов'язково)</span></label>
-          <textarea 
-            id="comment" 
-            name="comment" 
-            placeholder="Напишіть про особливості, вподобання дитини або питання..."
-            class="form-textarea"
-            rows="3"
-          ></textarea>
+          <label for="comment" class="form-label">Додатковий коментар <span
+              class="optional">(необов'язково)</span></label>
+          <textarea id="comment" name="comment" placeholder="Напишіть про особливості, вподобання дитини або питання..."
+            class="form-textarea" rows="3"></textarea>
         </div>
 
         <!-- Checkbox -->
         <div class="form-group checkbox-group">
           <label class="checkbox-label">
-            <input 
-              type="checkbox" 
-              name="consent" 
-              id="consent"
-              class="form-checkbox"
-              required
-            >
+            <input type="checkbox" name="consent" id="consent" class="form-checkbox" required>
             <span class="checkbox-text">
-              Я надаю згоду на обробку моїх персональних даних з метою зв'язку щодо бронювання зміни та організації відпочинку дитини.
+              Я надаю згоду на обробку моїх персональних даних з метою зв'язку щодо бронювання зміни та організації
+              відпочинку дитини.
             </span>
           </label>
         </div>
@@ -2879,10 +2863,9 @@
           <div class="success-icon">💛</div>
           <h3>Дякуємо що обираєте нас!</h3>
           <p>Ми зв'яжемося з вами для підтвердження бронювання.</p>
-          <button type="button" class="btn-secondary" onclick="resetForm()">Подати ще одну заявку</button>
+          <button type="button" class="btn-secondary" onclick="resetFormNow()">Подати ще одну заявку</button>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- FOOTER -->
@@ -3017,25 +3000,74 @@
     draggable(document.getElementById('reviewsScroll'));
     draggable(document.getElementById('territoryScroll'));
 
-    // Handle form submission
-    function handleFormSubmit(event) {
-      // Показываем сообщение об успехе
+    // Submit form via AJAX
+    function submitForm(event) {
+      event.preventDefault();
+
+      const form = document.getElementById('bookingForm');
       const submitBtn = document.querySelector('.btn-submit');
+      const originalText = submitBtn.innerHTML;
+
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>⏳</span> Дякуємо за заявку!';
-      
-      // Ждем 2 секунды и редиректим на начало сайта
-      setTimeout(() => {
-        window.location.href = window.location.pathname + '#hero';
-      }, 2000);
+      submitBtn.innerHTML = '<span>⏳</span> Відправляємо...';
+
+      // Create FormData object
+      const formData = new FormData(form);
+
+      // Send to Formspree via fetch
+      fetch('https://formspree.io/f/mojzjyqb', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            // Show success message
+            showSuccessModal();
+            // Clear form
+            form.reset();
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          } else {
+            alert('Помилка при відправленні. Спробуйте ще раз.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Помилка при відправленні');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        });
+    }
+
+    function showSuccessModal() {
+      const form = document.getElementById('bookingForm');
+      const successMsg = document.getElementById('successMessage');
+
+      form.style.display = 'none';
+      successMsg.style.display = 'flex';
+    }
+
+    function resetFormNow() {
+      const form = document.getElementById('bookingForm');
+      const successMsg = document.getElementById('successMessage');
+
+      form.style.display = 'block';
+      successMsg.style.display = 'none';
+      form.reset();
     }
 
     // Phone number formatting
     const phoneInput = document.getElementById('parentPhone');
     if (phoneInput) {
-      phoneInput.addEventListener('input', function(e) {
+      phoneInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
-        
+
         if (value.length > 0) {
           if (!value.startsWith('380')) {
             if (value.startsWith('38')) {
@@ -3059,7 +3091,7 @@
             value = '+' + value;
           }
         }
-        
+
         e.target.value = value;
       });
     }
