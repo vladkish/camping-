@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Unbounded:wght@700;800&display=swap"
     rel="stylesheet">
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/build/index.min.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/build/index.min.js"></script>
   <style>
     :root {
       --yellow: #F5B800;
@@ -3020,20 +3020,28 @@
     draggable(document.getElementById('territoryScroll'));
 
     // Booking Form Handler
-    // Initialize EmailJS - ждем загрузки
-    if (typeof emailjs !== 'undefined') {
-      emailjs.init({
-        publicKey: 'EyRfxZJwn3RpaSRsy'
-      });
-    } else {
-      // Если скрипт еще не загрузился, ждем
-      setTimeout(() => {
-        if (typeof emailjs !== 'undefined') {
+    // Initialize EmailJS когда документ полностью загружен
+    function initEmailJS() {
+      if (typeof emailjs !== 'undefined') {
+        try {
           emailjs.init({
             publicKey: 'EyRfxZJwn3RpaSRsy'
           });
+          console.log('EmailJS инициализирован успешно');
+        } catch (error) {
+          console.error('Ошибка инициализации EmailJS:', error);
         }
-      }, 1000);
+      } else {
+        console.log('EmailJS еще не загружен, переpроверяем...');
+        setTimeout(initEmailJS, 500);
+      }
+    }
+
+    // Инициализируем когда страница загружена
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initEmailJS);
+    } else {
+      initEmailJS();
     }
 
     function handleFormSubmit(event) {
@@ -3041,7 +3049,7 @@
       
       // Проверяем что EmailJS загружен
       if (typeof emailjs === 'undefined') {
-        alert('Сервис отправки писем еще загружается. Спробуйте ще раз за секунду.');
+        alert('⏳ Сервіс відправки писем ще загружається...\nПопробуйте через кілька секунд.');
         return;
       }
       
