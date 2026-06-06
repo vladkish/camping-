@@ -2795,7 +2795,7 @@
       <h2>Забронюй зміну на літо</h2>
       <p>Заповни форму, і ми оформимо твоє місце в таборі. Місць обмежено!</p>
       
-      <form id="bookingForm" class="booking-form" action="https://formspree.io/f/mojzjyqb" method="POST">
+      <form id="bookingForm" class="booking-form" action="https://formspree.io/f/mojzjyqb" method="POST" onsubmit="handleFormSubmit(event)">
         <!-- ПІБ -->
         <div class="form-group">
           <label for="childName" class="form-label">ПІБ дитини</label>
@@ -3016,6 +3016,19 @@
     draggable(document.getElementById('galleryScroll'));
     draggable(document.getElementById('reviewsScroll'));
     draggable(document.getElementById('territoryScroll'));
+
+    // Handle form submission
+    function handleFormSubmit(event) {
+      // Показываем сообщение об успехе
+      const submitBtn = document.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳</span> Дякуємо за заявку!';
+      
+      // Ждем 2 секунды и редиректим на начало сайта
+      setTimeout(() => {
+        window.location.href = window.location.pathname + '#hero';
+      }, 2000);
+    }
 
     // Phone number formatting
     const phoneInput = document.getElementById('parentPhone');
