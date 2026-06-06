@@ -10,7 +10,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Unbounded:wght@700;800&display=swap"
     rel="stylesheet">
-  <script async src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/build/index.min.js"></script>
   <style>
     :root {
       --yellow: #F5B800;
@@ -2796,7 +2795,7 @@
       <h2>Забронюй зміну на літо</h2>
       <p>Заповни форму, і ми оформимо твоє місце в таборі. Місць обмежено!</p>
       
-      <form id="bookingForm" class="booking-form" onsubmit="handleFormSubmit(event)">
+      <form id="bookingForm" class="booking-form" action="https://formspree.io/f/xyzgknwq" method="POST">
         <!-- ПІБ -->
         <div class="form-group">
           <label for="childName" class="form-label">ПІБ дитини</label>
@@ -2830,11 +2829,10 @@
           <label for="session" class="form-label">Оберіть бажану зміну</label>
           <select id="session" name="session" class="form-select" required>
             <option value="">Виберіть зміну</option>
-            <option value="session-1">15.07.2026 – 28.07.2026</option>
-            <option value="session-2">01.07.2026 – 14.07.2026</option>
-            <option value="session-3">15.07.2026 – 28.07.2026</option>
-            <option value="session-4">01.08.2026 – 14.08.2026</option>
-            <option value="session-5">15.08.2026 – 28.08.2026</option>
+            <option value="15.07.2026 – 28.07.2026">15.07.2026 – 28.07.2026</option>
+            <option value="01.07.2026 – 14.07.2026">01.07.2026 – 14.07.2026</option>
+            <option value="01.08.2026 – 14.08.2026">01.08.2026 – 14.08.2026</option>
+            <option value="15.08.2026 – 28.08.2026">15.08.2026 – 28.08.2026</option>
           </select>
         </div>
 
@@ -3018,64 +3016,6 @@
     draggable(document.getElementById('galleryScroll'));
     draggable(document.getElementById('reviewsScroll'));
     draggable(document.getElementById('territoryScroll'));
-
-    // Booking Form Handler
-    // Initialize EmailJS
-    emailjs.init('EyRfxZJwn3RpaSRsy');
-
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      
-      // Get form data
-      const childName = document.getElementById('childName').value;
-      const parentPhone = document.getElementById('parentPhone').value;
-      const session = document.getElementById('session').value;
-      const comment = document.getElementById('comment').value || 'Немає';
-      const consent = document.getElementById('consent').checked;
-
-      // Validate form
-      if (!childName || !parentPhone || !session || !consent) {
-        alert('Будь ласка, заповніть всі обов\'язкові поля');
-        return;
-      }
-
-      // Show loading state
-      const submitBtn = document.querySelector('.btn-submit');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>⏳</span> Відправляємо...';
-
-      // Send email via EmailJS
-      emailjs.send('service_ef51fz5', 'booking_form', {
-        to_email: 'donets.lada.m@gmail.com',
-        child_name: childName,
-        parent_phone: parentPhone,
-        session: session,
-        comment: comment,
-        timestamp: new Date().toLocaleString('uk-UA')
-      }).then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        showSuccess();
-      }, function(error) {
-        console.log('FAILED!', error);
-        alert('Помилка при відправленні');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>✨</span> Забронювати місце';
-      });
-    }
-
-    function showSuccess() {
-      const form = document.getElementById('bookingForm');
-      const successMsg = document.getElementById('successMessage');
-      
-      form.style.display = 'none';
-      successMsg.style.display = 'flex';
-    }
-
-    function resetForm() {
-      document.getElementById('bookingForm').reset();
-      document.getElementById('bookingForm').style.display = 'block';
-      document.getElementById('successMessage').style.display = 'none';
-    }
 
     // Phone number formatting
     const phoneInput = document.getElementById('parentPhone');
