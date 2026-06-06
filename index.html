@@ -3020,13 +3020,30 @@
     draggable(document.getElementById('territoryScroll'));
 
     // Booking Form Handler
-    // Initialize EmailJS
-    emailjs.init({
-      publicKey: 'EyRfxZJwn3RpaSRsy'
-    });
+    // Initialize EmailJS - ждем загрузки
+    if (typeof emailjs !== 'undefined') {
+      emailjs.init({
+        publicKey: 'EyRfxZJwn3RpaSRsy'
+      });
+    } else {
+      // Если скрипт еще не загрузился, ждем
+      setTimeout(() => {
+        if (typeof emailjs !== 'undefined') {
+          emailjs.init({
+            publicKey: 'EyRfxZJwn3RpaSRsy'
+          });
+        }
+      }, 1000);
+    }
 
     function handleFormSubmit(event) {
       event.preventDefault();
+      
+      // Проверяем что EmailJS загружен
+      if (typeof emailjs === 'undefined') {
+        alert('Сервис отправки писем еще загружается. Спробуйте ще раз за секунду.');
+        return;
+      }
       
       // Get form data
       const formData = {
@@ -3053,11 +3070,10 @@
       // Send email via EmailJS
       emailjs.send('service_ef51fz5', 'booking_form', {
         to_email: 'donets.lada.m@gmail.com',
-        from_name: formData.childName,
         child_name: formData.childName,
         parent_phone: formData.parentPhone,
         session: formData.session,
-        comment: formData.comment,
+        comment: formData.comment || 'Немає',
         timestamp: formData.timestamp
       }).then(response => {
         console.log('Email sent successfully:', response);
@@ -3066,7 +3082,7 @@
         showSuccess();
       }).catch(error => {
         console.error('Failed to send email:', error);
-        alert('Сталася помилка при відправленні. Будь ласка, спробуйте ще раз.');
+        alert('Сталася помилка при відправленні. Помилка: ' + error.status);
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
       });
