@@ -25,8 +25,14 @@
       --muted: #6B7A5E;
       --white: #FFFFFF;
       --border: rgba(26, 34, 18, .08);
+      --surface: #FFFFFF;
       --r: 20px;
       --r-sm: 12px;
+      color-scheme: light;
+    }
+
+    html {
+      transition: background-color .4s ease;
     }
 
     *,
@@ -49,6 +55,7 @@
       font-size: 16px;
       line-height: 1.75;
       letter-spacing: 0.3px;
+      transition: background-color .4s ease, color .4s ease;
     }
 
     ::-webkit-scrollbar {
@@ -142,6 +149,107 @@
     .nav-cta:hover {
       background: var(--green-mid);
       transform: translateY(-1px)
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: background-color .3s ease, border-color .3s ease, transform .35s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+      border-color: var(--green);
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.92);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), opacity .35s ease;
+    }
+
+    .theme-toggle .icon-sun {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+      color: var(--yellow);
+    }
+
+    .theme-toggle .icon-moon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.4);
+      color: var(--green-light);
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-sun {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.4);
+    }
+
+    html[data-theme="dark"] .theme-toggle .icon-moon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+
+    .theme-toggle.spin {
+      animation: themeSpin .5s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    @keyframes themeSpin {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(160deg) scale(0.85);
+      }
+
+      100% {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    .mobile-theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      padding: 12px 20px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'Unbounded', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color .3s ease, border-color .3s ease, transform .2s ease;
+    }
+
+    .mobile-theme-toggle:active {
+      transform: scale(0.96);
+    }
+
+    .mobile-theme-toggle svg {
+      width: 18px;
+      height: 18px;
     }
 
     .burger {
@@ -519,7 +627,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--white);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
       padding: 10px 20px;
@@ -570,7 +678,7 @@
     }
 
     .stat-pill {
-      background: var(--white);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--r-sm);
       padding: 14px 18px;
@@ -869,7 +977,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: var(--white);
+      background: var(--surface);
       border-radius: var(--r-sm);
       padding: 14px 16px;
       font-size: 13px;
@@ -976,7 +1084,7 @@
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      background: var(--white);
+      background: var(--surface);
       border-radius: var(--r-sm);
       padding: 18px;
     }
@@ -1027,7 +1135,7 @@
       border: 2.5px solid var(--dark);
       border-radius: 20px;
       padding: 50px 40px;
-      background: var(--white);
+      background: var(--surface);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1281,7 +1389,7 @@
     .rev-card {
       flex-shrink: 0;
       width: 340px;
-      background: var(--white);
+      background: var(--surface);
       border-radius: var(--r);
       padding: 28px;
       display: flex;
@@ -1616,7 +1724,7 @@
       font-size: 15px;
       border: 2px solid var(--border);
       border-radius: var(--r-sm);
-      background: var(--white);
+      background: var(--surface);
       color: var(--text);
       transition: all 0.25s ease;
     }
@@ -1725,7 +1833,7 @@
     }
 
     .success-content {
-      background: var(--white);
+      background: var(--surface);
       border-radius: var(--r);
       padding: 60px 48px;
       max-width: 400px;
@@ -2237,6 +2345,126 @@
         grid-template-columns: 1fr
       }
     }
+
+    /* ================= DARK THEME ================= */
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #14170f;
+      --card-bg: #1b2015;
+      --surface: #1c2116;
+      --text: #ECEDE4;
+      --muted: #9AAA8C;
+      --border: rgba(236, 237, 228, .12);
+    }
+
+    html[data-theme="dark"] nav {
+      transition: background .3s ease, box-shadow .25s, color .3s ease;
+    }
+
+    html[data-theme="dark"] nav.scrolled {
+      background: rgba(20, 23, 15, .92);
+    }
+
+    html[data-theme="dark"] .mobile-menu {
+      background: rgba(20, 23, 15, .98);
+    }
+
+    html[data-theme="dark"] .hero-left {
+      background: linear-gradient(135deg, #171b10 0%, #1d2216 100%);
+      transition: background .4s ease;
+    }
+
+    @media(max-width:768px) {
+      html[data-theme="dark"] .hero-left {
+        background: linear-gradient(180deg, #171b10 0%, #1d2216 50%, rgba(94, 140, 58, .28) 100%);
+      }
+    }
+
+    html[data-theme="dark"] .hero-tag {
+      color: var(--green-light);
+    }
+
+    html[data-theme="dark"] .hero-tag::before {
+      background: var(--green-light);
+    }
+
+    html[data-theme="dark"] .stat-num {
+      color: var(--green-light);
+    }
+
+    html[data-theme="dark"] #community {
+      background: #171c12;
+    }
+
+    html[data-theme="dark"] #facts {
+      background: linear-gradient(135deg, #191e13 0%, #171c12 100%);
+    }
+
+    html[data-theme="dark"] #reviews {
+      background: #171c12;
+    }
+
+    html[data-theme="dark"] .expand-trig {
+      transition: background .25s ease, color .25s ease;
+    }
+
+    html[data-theme="dark"] .expand-trig:hover {
+      background: #242a1c;
+    }
+
+    html[data-theme="dark"] .fact-block {
+      border-color: rgba(236, 237, 228, .2);
+      transition: transform .35s cubic-bezier(.4, 0, .2, 1), box-shadow .35s, background-color .35s ease, border-color .35s ease;
+    }
+
+    html[data-theme="dark"] .fact-num {
+      color: var(--green-light);
+    }
+
+    html[data-theme="dark"] .fac-item {
+      transition: transform .25s cubic-bezier(.4, 0, .2, 1), background-color .3s ease;
+    }
+
+    html[data-theme="dark"] .g-label {
+      background: rgba(20, 23, 15, .85);
+      color: var(--text);
+    }
+
+    html[data-theme="dark"] .booking-form {
+      background: rgba(28, 33, 22, .95);
+    }
+
+    html[data-theme="dark"] .success-content {
+      box-shadow: 0 25px 50px rgba(0, 0, 0, .5);
+    }
+
+    html[data-theme="dark"] .stat-pill,
+    html[data-theme="dark"] .hero-tag,
+    html[data-theme="dark"] .booking-form,
+    html[data-theme="dark"] .mobile-menu,
+    html[data-theme="dark"] .success-content,
+    html[data-theme="dark"] .g-label {
+      transition: background-color .4s ease, color .4s ease, border-color .4s ease;
+    }
+
+    html[data-theme="dark"] .hero-sub,
+    html[data-theme="dark"] .territory-header p,
+    html[data-theme="dark"] .community-text p,
+    html[data-theme="dark"] .offer-head p,
+    html[data-theme="dark"] .gallery-head p,
+    html[data-theme="dark"] .rev-text,
+    html[data-theme="dark"] .faq-a-inner {
+      color: rgba(236, 237, 228, .6);
+    }
+
+    html[data-theme="dark"] .form-input::placeholder,
+    html[data-theme="dark"] .form-textarea::placeholder {
+      color: rgba(236, 237, 228, .35);
+    }
+
+    html[data-theme="dark"] .cta-note {
+      color: rgba(236, 237, 228, .75) !important;
+    }
   </style>
 </head>
 
@@ -2258,6 +2486,15 @@
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#cta" class="nav-cta">Забронювати</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Змінити тему сайту" title="Змінити тему">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
     <div class="burger" id="burger"><span></span><span></span><span></span></div>
   </nav>
 
@@ -2272,6 +2509,12 @@
     <a href="#parents" class="mobile-link">Батькам</a>
     <a href="#faq" class="mobile-link">FAQ</a>
     <a href="#cta" class="mobile-link" style="color:var(--green); margin-top: 12px;">Забронювати →</a>
+    <button class="mobile-theme-toggle" id="mobileThemeToggle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <span id="mobileThemeLabel">Темна тема</span>
+    </button>
   </div>
 
   <!-- HERO -->
@@ -2912,6 +3155,42 @@
   </footer>
 
   <script>
+    // Theme switcher
+    (function () {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const mobileToggle = document.getElementById('mobileThemeToggle');
+      const mobileLabel = document.getElementById('mobileThemeLabel');
+
+      function updateMobileLabel(theme) {
+        if (mobileLabel) mobileLabel.textContent = theme === 'dark' ? 'Світла тема' : 'Темна тема';
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        try { localStorage.setItem('sokolyata-theme', theme); } catch (e) { }
+        updateMobileLabel(theme);
+      }
+
+      let saved = null;
+      try { saved = localStorage.getItem('sokolyata-theme'); } catch (e) { }
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+
+      function toggleTheme(el) {
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        if (el) {
+          el.classList.add('spin');
+          setTimeout(() => el.classList.remove('spin'), 500);
+        }
+      }
+
+      if (toggle) toggle.addEventListener('click', () => toggleTheme(toggle));
+      if (mobileToggle) mobileToggle.addEventListener('click', () => toggleTheme(null));
+    })();
+
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 50);
